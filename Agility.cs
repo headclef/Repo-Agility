@@ -12,7 +12,7 @@ public class Agility : BaseUnityPlugin
 {
     private const string PluginGuid = "headclef.Agility";
     private const string PluginName = "Agility";
-    private const string PluginVersion = "1.0.0";
+    private const string PluginVersion = "1.2.0";
 
     internal static Agility Instance { get; private set; } = null!;
     internal new static ManualLogSource Logger => Instance._logger;
@@ -24,6 +24,12 @@ public class Agility : BaseUnityPlugin
     internal static ConfigEntry<float> BaseRegenPerSecond = null!;
     internal static ConfigEntry<float> RegenPerCombinedLevel = null!;
     internal static ConfigEntry<float> MaxRegenPerSecond = null!;
+
+    // ── Movement Multipliers ──
+    internal static ConfigEntry<float> SprintingMultiplier = null!;
+    internal static ConfigEntry<float> WalkingMultiplier = null!;
+    internal static ConfigEntry<float> StandingMultiplier = null!;
+    internal static ConfigEntry<float> CrouchingStillMultiplier = null!;
 
     private void Awake()
     {
@@ -62,7 +68,29 @@ public class Agility : BaseUnityPlugin
 
         MaxRegenPerSecond = Config.Bind(section, "Max Regen Per Second", 0f,
             new ConfigDescription(
-                "Maximum stamina regeneration per second. 0 = no cap.",
+                "Maximum stamina regeneration per second. Caps the base (standing-still) rate before the movement multiplier is applied. 0 = no cap.",
                 new AcceptableValueRange<float>(0f, 50f)));
+
+        const string movementSection = "Movement Multipliers";
+
+        SprintingMultiplier = Config.Bind(movementSection, "Sprinting Multiplier", 0f,
+            new ConfigDescription(
+                "Stamina regen multiplier while sprinting/running. Default 0 = no regen while running.",
+                new AcceptableValueRange<float>(0f, 5f)));
+
+        WalkingMultiplier = Config.Bind(movementSection, "Walking Multiplier", 0.5f,
+            new ConfigDescription(
+                "Stamina regen multiplier while walking (moving on foot but not sprinting). Default 0.5 = half regen.",
+                new AcceptableValueRange<float>(0f, 5f)));
+
+        StandingMultiplier = Config.Bind(movementSection, "Standing Multiplier", 1f,
+            new ConfigDescription(
+                "Stamina regen multiplier while standing still. Default 1 = full regen.",
+                new AcceptableValueRange<float>(0f, 5f)));
+
+        CrouchingStillMultiplier = Config.Bind(movementSection, "Crouching Still Multiplier", 2f,
+            new ConfigDescription(
+                "Stamina regen multiplier while crouching and standing still (resting). Default 2 = double regen.",
+                new AcceptableValueRange<float>(0f, 5f)));
     }
 }
