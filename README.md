@@ -72,6 +72,10 @@ Settings are in `BepInEx/config/headclef.Agility.cfg`:
 
 ## Changelog
 
+### v1.2.1
+
+- Updated the Character Stats dependency to 1.2.0.
+
 ### v1.2.0
 
 - **Movement-aware regen** — stamina now recovers based on what you're doing: none while running, half while walking, full while standing still, and double while crouched and still.
