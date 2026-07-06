@@ -12,7 +12,7 @@ public class Agility : BaseUnityPlugin
 {
     private const string PluginGuid = "headclef.Agility";
     private const string PluginName = "Agility";
-    private const string PluginVersion = "1.2.1";
+    private const string PluginVersion = "1.2.2";
 
     internal static Agility Instance { get; private set; } = null!;
     internal new static ManualLogSource Logger => Instance._logger;
